@@ -17,7 +17,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetAllContacts()
         {
-            var list =_applicationDbContext.Contacts.Include(x => x.Addresses).ToArray();
+            var list =_applicationDbContext.Contacts!.Include(x => x.Addresses).ToArray();
             var response = list.Select(x => new
             {
                 Neme = x.Name,
@@ -30,7 +30,7 @@ namespace WebApi.Controllers
         {
             var contect = new Contact()
             {
-                Id=1,
+                Id=addContact.Id,
                 Name=addContact.Name,
                 Email=addContact.Email,
                 phone=addContact.Phone,
@@ -38,11 +38,36 @@ namespace WebApi.Controllers
             contect.Addresses = new List<Addresses>();
             for (int i = 0; i < addContact.AddressId.Count(); i++)
             {
-                contect.Addresses.Add(new Addresses { Id = addContact.AddressId[i], Address = addContact.Address[i] });
+                contect.Addresses.Add(new Addresses { 
+                    Id = addContact.AddressId[i], Address = addContact.Address[i] ,
+                    ContactId=addContact.Id
+                });
             }
             _applicationDbContext.Contacts!.Add(contect);
             _applicationDbContext.SaveChanges();
             return Ok(contect);
         }
+
+        [HttpPost]
+        [Route("{Id:int}")]
+        public IActionResult GetById([FromRoute] int Id)
+        {
+            var findContext = _applicationDbContext.Contacts
+                .Where(x => x.Id==Id).Include(y=>y.Addresses).ToArray();
+            
+            if (findContext == null)
+            {
+                return NotFound();
+            }
+            return Ok(findContext);
+        }
+        //[HttpPost]
+        //[Route("Id:int")]
+        //public IActionResult Update([FromRoute] int Id)
+        //{
+        //    var context = _applicationDbContext.Contacts!.Find(Id);
+
+        //    return Ok();
+        //}
     }
 }
