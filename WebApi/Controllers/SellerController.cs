@@ -48,7 +48,7 @@ namespace WebApi.Controllers
             return Ok(contect);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("{Id:int}")]
         public IActionResult GetById([FromRoute] int Id)
         {
