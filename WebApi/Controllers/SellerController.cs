@@ -61,13 +61,6 @@ namespace WebApi.Controllers
             }
             return Ok(findContext);
         }
-        //[HttpPost]
-        //[Route("Id:int")]
-        //public IActionResult Update([FromRoute] int Id)
-        //{
-        //    var context = _applicationDbContext.Contacts!.Find(Id);
-
-        //    return Ok();
-        //}
+        
     }
 }
