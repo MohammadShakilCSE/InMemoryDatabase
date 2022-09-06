@@ -21,7 +21,7 @@ namespace WebApi.Controllers
             var response = list.Select(x => new
             {
                 Neme = x.Name,
-                Adress = x.Addresses.Select(a => a.Address).ToArray()
+                Adress = x.Addresses!.Select(a => a.Address).ToArray()
             }); 
             return Ok(response);
         }
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
         [Route("{Id:int}")]
         public IActionResult GetById([FromRoute] int Id)
         {
-            var findContext = _applicationDbContext.Contacts
+            var findContext = _applicationDbContext.Contacts!
                 .Where(x => x.Id==Id).Include(y=>y.Addresses).ToArray();
             
             if (findContext == null)
