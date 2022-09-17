@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.DbContexts;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [ApiController]
+    [ApiController, Authorize]
     [Route("Api/contact")]
     public class SellerController : Controller
     {
