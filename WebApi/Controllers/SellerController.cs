@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.DbContexts;
@@ -6,7 +7,8 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-    [ApiController, Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [ApiController]
     [Route("Api/contact")]
     public class SellerController : Controller
     {
